@@ -1,3 +1,6 @@
+let currMoleTile;
+
+
 window.onload = () => {
     setGame();
 }
@@ -10,4 +13,26 @@ function setGame() {
         tile.id = i.toString();
         document.getElementById("board").appendChild(tile);
     }
+
+    setInterval(setMole, 2000);
+}
+
+function getRandomTile() {
+    let num = Math.floor(Math.random() * 9);
+    return num.toString();
+}
+
+function setMole() {
+
+    if (currMoleTile) {
+        currMoleTile.innerHTML = "";
+    }
+
+    let mole = document.createElement("img");
+    mole.src = "/pic/monty-mole.png";
+
+    let num = getRandomTile();
+    console.log(num);
+    currMoleTile = document.getElementById(num);
+    currMoleTile.appendChild(mole);
 }
