@@ -1,5 +1,7 @@
 let currMoleTile;
 let currPlantTile;
+let score = 0;
+let gameOver = false;
 
 
 window.onload = () => {
@@ -12,6 +14,7 @@ function setGame() {
         //create a <div id="0-8"></div> in tile
         let tile = document.createElement("div");
         tile.id = i.toString();
+        tile.addEventListener("click", selectTile)
         document.getElementById("board").appendChild(tile);
     }
 
@@ -25,6 +28,9 @@ function getRandomTile() {
 }
 
 function setMole() {
+    if (gameOver) {
+        return;
+    }
 
     if (currMoleTile) {
         currMoleTile.innerHTML = "";
@@ -42,6 +48,10 @@ function setMole() {
 }
 
 function setPlant() {
+    if (gameOver) {
+        return;
+    }
+
     if (currPlantTile) {
         currPlantTile.innerHTML = "";
     }
@@ -55,4 +65,21 @@ function setPlant() {
     }
     currPlantTile = document.getElementById(num);
     currPlantTile.appendChild(plant);
+}
+
+function selectTile() {
+
+    if (gameOver) {
+        return;
+    }
+    
+    // this, refers to the thing you clicked from the listener.
+    if (this === currMoleTile) {
+        score += 10;
+        document.getElementById("score").innerText = score.toString();
+    }
+    else if (this === currPlantTile) {
+        document.getElementById("score").innerText = "Game Over: " + score.toString();
+        gameOver = true;
+    }
 }
